@@ -1,0 +1,198 @@
+// Font scale helpers
+// =============================================================================
+
+
+
+/**
+ * Grab all levels of a font in the font-scale
+ *
+ * @param {String} $name - Name of the font-scale matrix (eg: header)
+ * @param {Map} $font-scale ($font-scale)
+ *
+ * @example
+ *  font-size: get-scale(header);
+ *
+ * @requires {variable} $font-scale
+ *
+ * @return {Map}
+ */
+@function get-scale($name, $font-scale: $font-scale) {
+    @return map-get($font-scale, $name);
+}
+
+
+
+/**
+ * Grab info for a particular level of a font-scale
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: headline)
+ * @param {Number} $level - Level in the matrix
+ * @param {Map} $font-scale ($font-scale)
+ *
+ * @example
+ *  font-size: get-scale-level(header, 1);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-scale
+ *
+ * @return {Map}
+ */
+@function get-scale-level($name, $level, $font-scale: $font-scale) {
+    @return map-get(get-scale($name, $font-scale), $level);
+}
+
+
+
+/**
+ * Get a font-size for a level in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: headline)
+ * @param {Number} $level - Level in the matrix
+ * @param {Map} $font-scale - Configuration
+ *
+ * @example
+ *  font-size: get-font-size(header, 3);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-scale-level
+ *
+ * @return {Number}
+ */
+@function get-font-size($name, $level, $font-scale: $font-scale) {
+    @return map-get(get-scale-level($name, $level, $font-scale), font-size);
+}
+
+
+
+/**
+ * Get the line-height list for a level in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: headline)
+ * @param {Number} $level - Level in the matrix
+ * @param {Map} $font-scale - Configuration
+ *
+ * @example
+ *  font-size: get-line-height-base(header, 3);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-scale-level
+ *
+ * @return {Number}
+ */
+@function get-line-height-base($name, $level, $font-scale: $font-scale) {
+    @return map-get(get-scale-level($name, $level, $font-scale), line-height);
+}
+
+
+
+/**
+ * Get the line-heightfor a level and caps value in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: headline)
+ * @param {Number} $level - Level in the matrix
+ * @param {bool} $caps - If text-transform is uppercase
+ * @param {Map} $font-scale - Configuration
+ *
+ * @example
+ *  font-size: get-line-height(header, 3, $caps:true);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-line-height-base
+ *
+ * @return {Number}
+ */
+@function get-line-height($name, $level, $caps, $font-scale: $font-scale) {
+
+    $line-height-level: 1 !default;
+    $line-heights: get-line-height-base($name, $level, $font-scale);
+
+    @if $caps == true {
+        $line-height-level: 2;
+    }
+
+    // if caps, make sure that a caps line-height exists before trying to return line-height, otherwise sass will fail on the nth function
+    @if ( ($line-heights != null and $caps == false) or ($line-heights != null and $caps == true and length($line-heights) == 2) ) {
+        @return nth(get-line-height-base($name, $level, $font-scale), $line-height-level);
+    } @else {
+        @return null;
+    }
+
+}
+
+
+
+/**
+ * Get a letter-spacing list for a level in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: header)
+ * @param {Number} $level - Level in the matrix
+ * @param {Map} $font-scale - Configuration
+ *
+ * @example
+ *  letter-spacing: get-letter-spacing-base(header, 3);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-scale-level
+ *
+ * @return {Number}
+ */
+@function get-letter-spacing-base($name, $level, $font-scale: $font-scale) {
+    @return map-get(get-scale-level($name, $level, $font-scale), letter-spacing);
+}
+
+
+
+/**
+ * Get a letter-spacing for a level and caps value in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: header)
+ * @param {Number} $level - Level in the matrix
+ * @param {Bool} $caps - If text-transform is uppercase
+ * @param {Map} $font-scale - Configuration
+ *
+ * @example
+ *  letter-spacing: get-letter-spacing(header, 3, $caps:true);
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-letter-spacing-base
+ *
+ * @return {Number}
+ */
+@function get-letter-spacing($name, $level, $caps, $font-scale: $font-scale) {
+
+    $letter-spacing-level: 1 !default;
+    $letter-spacings: get-letter-spacing-base($name, $level, $font-scale);
+
+    @if $caps == true {
+        $letter-spacing-level: 2;
+    }
+
+    @if ( ($letter-spacings != null and $caps == false) or ($letter-spacings != null and $caps == true and length($letter-spacings) == 2) ) {
+        @return nth(get-letter-spacing-base($name, $level, $font-scale), $letter-spacing-level);
+    } @else {
+        @return null;
+    }
+
+}
+
+
+
+/**
+ * Get a responsive-level for a level in the font-scale matrix
+ *
+ * @param {String} $name - Name of the font-scale in the matrix (eg: headline)
+ * @param {Number} $level - Level in the matrix
+ * @param {Map} $font-scale - Configuration
+ *
+ * @requires {variable} $font-scale
+ * @requires {function} get-scale-level
+ *
+ * @return {Number}
+ *
+ * @group typography
+ */
+@function get-responsive-level($name, $level, $font-scale: $font-scale) {
+    @return map-get(get-scale-level($name, $level, $font-scale), responsive-level);
+}
+
+

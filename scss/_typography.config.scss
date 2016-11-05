@@ -1,0 +1,52 @@
+// Example config file, includes maps and variables
+// =============================================================================
+
+$sans-serif: 'Helvetica', sans-serif;
+$serif: 'Georgia', serif;
+
+// Breakpoint at which the font will switch to smaller size
+$fs-breakpoint: 500px;
+
+// Set font-family and font-weight 
+$font: (
+    header: (
+        family: $sans-serif,
+        weight: normal,
+    ), 
+    headline: (
+        family: $sans-serif,
+        weight: bold,
+    ),
+    bodyCopy: (
+        family: $serif,
+        weight: normal,
+    )
+);
+
+
+// Set size, line-height, letter-spacing, and responsive level
+$font-scale: (
+    header: (
+        1: (font-size: 48px, line-height: (1.2, 1), letter-spacing: (0.02em, 0.1em)),
+        2: (font-size: 60px, line-height: 1, responsive-level: 1, letter-spacing: (0.02em, 0.1em)),
+        3: (font-size: 72px, line-height: (1, 1), responsive-level: 1, letter-spacing: (0.02em, 0.1em)),
+        4: (font-size: 95px, line-height: (1, 1), responsive-level: 2, letter-spacing: (0.02em, 0.1em)),
+    ),
+    headline: (
+        1: (font-size: 27px, line-height: (1, 1), letter-spacing: (0.02em, 0.1em)),
+        2: (font-size: 36px, line-height: (1, 1), responsive-level: 1, letter-spacing: (0.02em, 0.1em)),
+        3: (font-size: 42px, line-height: (1, 1), responsive-level: 2, letter-spacing: (0.02em, 0.1em)),
+        4: (font-size: 52px, line-height: (1, 1), responsive-level: 2, letter-spacing: (0.02em, 0.1em)),
+        5: (font-size: 95px, line-height: (1, 1), responsive-level: 2),
+    ),
+    bodyCopy: (
+        1: (font-size: 12px, line-height: (1.2, 1), letter-spacing: (null, 0.1em)),
+        2: (font-size: 15px, line-height: (1.2, 1), letter-spacing: (0.01em, 0.2em)),
+    )
+) !default;
+
+
+
+
+
+

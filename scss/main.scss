@@ -1,0 +1,41 @@
+@import "typography.mixins";
+@import "typography.helpers";
+@import "typography.config";
+
+@include typography-defaults($serif);
+
+
+.container { 
+	max-width: 800px;
+	padding: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header-1 { @include font-scale(header, 1); }
+.header-2 { @include font-scale(header, 2); }
+.header-3 { @include font-scale(header, 3); }
+.header-4 { @include font-scale(header, 4); }
+
+.headline-1 { @include font-scale(headline, 1); }
+.headline-2 { @include font-scale(headline, 2); }
+.headline-3 { @include font-scale(headline, 3); }
+.headline-4 { @include font-scale(headline, 4); }
+.headline-5 { @include font-scale(headline, 5); }
+
+.bodyCopy-1 { @include font-scale(bodyCopy, 1); }
+.bodyCopy-2 { @include font-scale(bodyCopy, 2); }
+
+.header-1--caps { @include font-scale(header, 1, $caps: true); }
+.header-2--caps { @include font-scale(header, 2, $caps: true); }
+.header-3--caps { @include font-scale(header, 3, $caps: true); }
+.header-4--caps { @include font-scale(header, 4, $caps: true); }
+
+.headline-1--caps { @include font-scale(headline, 1, $caps: true); }
+.headline-2--caps { @include font-scale(headline, 2, $caps: true); }
+.headline-3--caps { @include font-scale(headline, 3, $caps: true); }
+.headline-4--caps { @include font-scale(headline, 4, $caps: true); }
+.headline-5--caps { @include font-scale(headline, 5, $caps: true); }
+
+.bodyCopy-1--caps { @include font-scale(bodyCopy, 1, $caps: true); }
+.bodyCopy-2--caps { @include font-scale(bodyCopy, 2, $caps: true); }

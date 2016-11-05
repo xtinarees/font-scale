@@ -1,0 +1,22 @@
+{
+  "name": "font-scale",
+  "description": "Take control over your fonts",
+  "version": "0.0.0",
+  "main": [
+    "scss/_typography.helpers.scss",
+    "scss/_typography.mixins.scss"
+  ],
+  "authors": [
+    "Christina Rees <reesxtina@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+}

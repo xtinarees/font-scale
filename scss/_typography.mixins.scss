@@ -1,0 +1,146 @@
+// Default type settings
+// =============================================================================
+
+
+/**
+ * Default typography settings, to be included as soon as possible in the HTML
+ * Make type rendering look crisper
+ *
+ * @param {String} $font-family - Default global font
+ */
+@mixin typography-defaults($font-family) {
+    @at-root {
+        html {
+            font-family: $font-family;
+            line-height: 1.5;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+}
+
+
+
+// Shorthands for font declarations
+// =============================================================================
+
+/**
+ * Font-size and line-height shorthand
+ *
+ * @param {Number} $size
+ * @param {Number} $line-height
+ * @param {Bool} $no-line-height
+ *
+ * @example
+ *  @include font-size(18, 24);
+ *
+ */
+@mixin font-size($size, $line-height, $no-line-height: false) {
+    font-size: $size;
+    @if $no-line-height == false and $line-height != null {
+        line-height: $line-height;
+    }
+}
+
+
+
+
+// Font scale
+// =============================================================================
+
+/**
+ * Header family and weight properties.
+ *
+ * @param {Map} $name
+ *
+ */
+@mixin font($name) {
+    font-family: map-get(get-scale($name, $font), family);
+    font-weight: map-get(get-scale($name, $font), weight);
+}
+
+
+
+
+
+/**
+ * Typography settings for responsive level
+ *
+ * @param {String} $name
+ * @param {Number} $level
+ * @param {Bool} $caps
+ * @param {Bool} $no-line-height
+ * @param {Bool} $no-letter-spacing
+ *
+ * @requires {function} get-letter-spacing
+ * @requires {function} get-font-size
+ * @requires {function} get-line-height
+ * @requires {function} get-letter-spacing
+ * @requires {mixin} font-size
+ *
+ */
+@mixin fs-inc($name, $level, $caps: false, $no-line-height: false, $no-letter-spacing: false) {
+
+    $letter-spacing: get-letter-spacing($name, $level, $caps);
+
+    @include font-size(get-font-size($name, $level),  get-line-height($name, $level, $caps), $no-line-height);
+
+
+    // if letter spacing on font, apply.
+    // otherwise set to 0. This will overwrite letter-spacing when applied to responsive sizes
+    // caps function after this one so that it will override this one.
+    @if $letter-spacing != null and $no-letter-spacing == false {
+        letter-spacing: $letter-spacing;
+    } @else if $caps == true {
+        letter-spacing: 0;
+    }
+
+}
+
+/**
+ * Typography settings
+ *
+ * @param {String} $name
+ * @param {Number} $level
+ * @param {Bool} $no-font
+ * @param {Bool} $caps
+ * @param {Bool} $responsive
+ * @param {Bool} $no-line-height
+ * @param {Bool} $no-letter-spacing
+ *
+ * @example
+ *  // Output all properties, lowercase 
+ *  (font-size, line-height, font-family, font-weight, letter-spacing)
+ *  @include font-scale(header, 3);
+ *  
+ *  // Output all properties, uppercase 
+ *  (font-size, line-height, font-family, font-weight, letter-spacing, text-transform)
+ *  @include font-scale(header, 3, $caps: true);
+ *  
+ *  // Output only font-size and line-height
+ *  @include font-scale(header, 3, $no-font: true, $no-letter-spacing: true);
+ *
+ * @requires {mixin} font
+ * @requires {mixin} fs-inc
+ * @requires {function} get-responsive-level
+ * @requires {variable} $fs-breakpoint
+ *
+ */
+@mixin font-scale($name, $level, $no-font: false, $caps: false, $responsive: true, $no-line-height: false, $no-letter-spacing: false) {
+
+    @if $no-font == false {
+        @include font($name);
+    }
+
+    @if $caps == true {
+        text-transform: uppercase;
+    }
+
+    @include fs-inc($name, $level, $caps, $no-line-height, $no-letter-spacing);
+
+    @if (get-responsive-level($name, $level) != null) and ($responsive == true) and ($fs-breakpoint != null) {
+        @media (max-width: $fs-breakpoint) {
+            @include fs-inc($name, get-responsive-level($name, $level), $caps, $no-line-height, $no-letter-spacing);
+        }
+    }
+}

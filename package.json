@@ -1,0 +1,14 @@
+{
+  "name": "font-scale",
+  "version": "1.0.0",
+  "description": "Take control over your fonts",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "gulp-sass": "^2.3.2"
+  },
+  "author": "",
+  "license": "ISC"
+}
